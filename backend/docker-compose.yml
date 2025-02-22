@@ -1,0 +1,37 @@
+services:
+  backend:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy  # Ждать, пока PostgreSQL будет здоров
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=student
+      - DB_PASSWORD=student
+      - DB_NAME=nest_project
+      - NODE_ENV=production
+      - PORT=3000
+      - JWT_SECRET=8f6dc4c1c9e3bf0da3e9929511f269c67897595f5c996a78670b6742d8445
+      - JWT_EXPIRATION_TIME=360000
+
+  postgres:
+    image: postgres:12
+    environment:
+      - POSTGRES_USER=student
+      - POSTGRES_PASSWORD=student
+      - POSTGRES_DB=nest_project
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U student -d nest_project"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres-data:

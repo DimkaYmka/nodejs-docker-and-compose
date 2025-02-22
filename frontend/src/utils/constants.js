@@ -1,4 +1,4 @@
-export const URL = "http://api.mda.nomorepartiessbs.ru:3000";
+export const URL = "https://api.mda.nomorepartiessbs.ru";
 
 export const MINIMUM_PASSWORD_LENGTH = 3;
 export const MINIMUM_USERNAME_LENGTH = 3;
